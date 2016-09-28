@@ -5,7 +5,9 @@
     \date September 2016
 
  *  This file has to be included BEFORE salvo.h because salvo.h has a #define
- *  for the symbol "OSC", which is also used here.
+ *  for the symbol "OSC", which is also used here. (Only relevant if you are
+ *  using Salvo of course).
+ 
     Include file to program the configuration registers using the
     'new' type of CONFIG directive.
 
