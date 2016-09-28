@@ -1,5 +1,6 @@
 # Based on David Rapisarda's ignore file. This .gitignore is "inclusive"
-# in that everything is ignored and then we add inclusions
+# in that everything is ignored and then we add inclusions. This file is
+# intended for use with MPLAB projects.
 
 # ignore everything
 *
@@ -27,5 +28,5 @@
 # Include .xml files in the nbproject folder first level
 !**/nbproject/*.xml
 
-# Include salvo files
+# Include salvo files (which are stored in a subdirectory named "salvo")
 !salvo/**/*	
