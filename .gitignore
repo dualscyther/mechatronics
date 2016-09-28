@@ -1,0 +1,31 @@
+# Based on David Rapisarda's ignore file. This .gitignore is "inclusive"
+# in that everything is ignored and then we add inclusions
+
+# ignore everything
+*
+
+# What we will now include
+
+# The .gitignore file
+!.gitignore
+
+# Include the root folder
+!*/
+
+# Include the markdown files (e.g. readme.md)
+!*.md
+
+# Include the source files and header files
+!*.asm
+!*.inc
+!*.c
+!*.h
+
+# Include files called "Makefile"
+!**/Makefile
+
+# Include .xml files in the nbproject folder first level
+!**/nbproject/*.xml
+
+# Include salvo files
+!salvo/**/*	
