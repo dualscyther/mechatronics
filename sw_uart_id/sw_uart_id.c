@@ -20,6 +20,10 @@
 #include <pconfig.h>
 #include "sw_uart_id.h"
 
+/* These could actually just be defined and declared static in isr.c */
+volatile unsigned char received_count = BITSPBYTE;
+volatile unsigned char transmit_count = BITSPBYTE;
+
 /** Configures ports and interrupts for receiving software UART */
 void open_sw_uart_receive(void)
 {
@@ -33,7 +37,7 @@ void open_sw_uart_receive(void)
         internal clock (Fosc/4) */
     T3CON           = 0b10001001;
 
-    /* Setup Capture 2 (capture every falling edge) */
+    /* Setup Capture 2 (capture every rising edge) */
     CCP2CON         = 0b00000101;
     
     /* Enable high priorities on Timer 3 and CCP2 interrupts */
@@ -44,14 +48,17 @@ void open_sw_uart_receive(void)
     PIR2bits.CCP2IF = 0;
     PIR2bits.TMR3IF = 0;
     
-    /* Enable interrupts on Timer 3 overflow and CCP2 */
+    /* Enable interrupt on CCP2 */
     PIE2bits.CCP2IE = 1;
-    PIE2bits.TMR3IE = 1;
+    
+    /* Disable interrupt on Timer 3 overflow (for now) */
+    PIE2bits.TMR3IE = 0;
     
     return;
 }
 
-/** @todo unfinished */
+/** Configures ports and interrupts for transmitting software UART 
+    @todo unfinished */
 void open_sw_uart_transmit(void)
 {
     TRIS_SWTXDpin   = 0;

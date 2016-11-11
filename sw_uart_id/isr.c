@@ -21,11 +21,44 @@ the tutorials. Organized by compiler and target (SYS*).
     @date November 2016
 */
 
+#include "pconfig.h"
 #include "sw_uart_id.h"
 
 #pragma interrupt ISRHigh
 void ISRHigh(void)
 {
+    /* Check if it is the Capture 2 interrupt */
+    if(PIE2bits.CCP2IE && PIR2bits.CCP2IF)
+    {
+        /* Toggle rising/falling edge capture @todo change */
+        CCP2CONbits.CCP2M0  = !CCP2CONbits.CCP2M0;
+        
+        /* Clear possible false interrupt trigger */
+        PIR2bits.CCP2IF     = 0;
+        
+        /* Algorithm */
+    }
+    
+    /* Check if it is the Timer 3 overflow interrupt (stop bit reached) */
+    if(PIE2bits.TMR3IE && PIR2bits.TMR3IF)
+    {
+        PIR2bits.TMR3IF     = 0;
+        
+        /* Don't need this interrupt until the next start bit is detected */
+        PIE2bits.TMR3IE     = 0;
+        
+        /* Reset Capture 2 for rising edge interrupt to detect start bit */
+        CCP2CONbits.CCP2M0  = 1;
+        
+        /* Clear possible false interrupt trigger */
+        PIR2bits.CCP2IF     = 0;
+        
+        /* Write the rest of the bits somewhere */
+        
+        /* Reset the counter */
+        received_count      = BITSPBYTE;
+    }
+    
     return;
 }
 
