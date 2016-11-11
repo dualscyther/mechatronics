@@ -26,9 +26,13 @@
 #define SWTXDpin            LATDbits.LATD6        
 #define TRIS_SWTXDpin       TRISDbits.TRISD6
 
-/* Choose which pins are used for reception - Either RC1 or RB3 (CCP2) */
+/* Choose which pins are used for reception - Either RC1 or RB3 (CCP2) 
+    @todo probably don't need this */
 #define SWRXDpin            PORTCbits.RC1
 #define TRIS_SWRXDpin       TRISCbits.TRISC1
+
+void open_sw_uart_receive(void);
+void open_sw_uart_transmit(void);
 
 #endif	/* SW_UART_ID_H */
 
