@@ -21,8 +21,12 @@
 #include "sw_uart_id.h"
 
 /* These could actually just be defined and declared static in isr.c */
-volatile unsigned char received_count = BITSPBYTE;
-volatile unsigned char transmit_count = BITSPBYTE;
+volatile unsigned char received_count            = BITSPBYTE;
+volatile unsigned char received_byte_current     = 0;
+volatile unsigned char received_byte             = 0;
+volatile unsigned char received_byte_ready       = 0;
+
+volatile unsigned char transmit_count   = BITSPBYTE;
 
 /** Configures ports and interrupts for receiving software UART */
 void open_sw_uart_receive(void)
@@ -47,6 +51,9 @@ void open_sw_uart_receive(void)
     /* Clear interrupt flags for Timer 3 and CCP2 */
     PIR2bits.CCP2IF = 0;
     PIR2bits.TMR3IF = 0;
+    
+    /* Initialise counter */
+    received_count  = BITSPBYTE;
     
     /* Enable interrupt on CCP2 */
     PIE2bits.CCP2IE = 1;

@@ -19,6 +19,8 @@ the tutorials. Organized by compiler and target (SYS*).
     @author Daniel Tam
     @version 1
     @date November 2016
+ * 
+ * @todo reception is LSB first
 */
 
 #include "pconfig.h"
@@ -36,7 +38,7 @@ void ISRHigh(void)
         /* Clear possible false interrupt trigger */
         PIR2bits.CCP2IF     = 0;
         
-        /* Algorithm */
+        /* Execute algorithm */
     }
     
     /* Check if it is the Timer 3 overflow interrupt (stop bit reached) */
@@ -53,7 +55,13 @@ void ISRHigh(void)
         /* Clear possible false interrupt trigger */
         PIR2bits.CCP2IF     = 0;
         
-        /* Write the rest of the bits somewhere */
+        /* ALGORITHM */
+        /* Shift the received bits to the end. Data is shifted in LSB first */
+        received_byte_current = received_byte_current >> (8 - received_count)
+        
+        /* Write the remaining bits as 0s */
+        received_byte_current &= (unsigned char)(0x00FF >> (8 - received_count));
+        received_byte = received_byte_current;
         
         /* Reset the counter */
         received_count      = BITSPBYTE;
