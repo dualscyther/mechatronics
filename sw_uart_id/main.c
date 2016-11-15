@@ -1,9 +1,9 @@
 /** 
-    @file main.c
-    @brief Test file. Enables interrupt priorities and global interrupts.
-    @author Daniel Tam
-    @version 1
-    @date November 2016
+ * @file main.c
+ * @brief Test file. Enables interrupt priorities and global interrupts.
+ * @author Daniel Tam
+ * @version 1
+ * @date November 2016
  */
 
 #include "sw_uart_id.h"
